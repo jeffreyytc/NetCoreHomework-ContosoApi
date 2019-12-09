@@ -1,0 +1,58 @@
+﻿{
+   "ContextClassName": "ContosouniversityContext",
+   "ContextNamespace": "Models",
+   "DefaultDacpacSchema": null,
+   "DoNotCombineNamespace": false,
+   "IdReplace": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": "Models",
+   "OutputContextPath": "Models",
+   "OutputPath": "Models",
+   "ProjectRootNamespace": "ContosoApi",
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Course]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[CourseInstructor]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Department]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Enrollment]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[OfficeAssignment]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Person]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[vwCourseStudentCount]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[vwCourseStudents]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[vwDepartmentCourseCount]"
+      }
+   ],
+   "UseDatabaseNames": false,
+   "UseFluentApiOnly": false,
+   "UseHandleBars": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": false,
+   "UseSpatial": false
+}
