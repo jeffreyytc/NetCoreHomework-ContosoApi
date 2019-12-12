@@ -27,6 +27,13 @@ namespace ContosoApi.Controllers
             return await _context.Departments.ToListAsync();
         }
 
+        // GET: api/Departments/CourseCounts
+        [HttpGet("CourseCounts")]
+        public async Task<ActionResult<IEnumerable<VwDepartmentCourseCount>>> GetDepartmentCourseCounts()
+        {
+            return await _context.VwDepartmentCourseCounts.FromSqlRaw("SELECT * FROM [vwDepartmentCourseCount]").ToListAsync();
+        }
+
         // GET: api/Departments/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDepartment(int id)
