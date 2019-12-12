@@ -25,6 +25,7 @@ namespace ContosoApi.Models
         public virtual DbSet<VwCourseStudent> VwCourseStudents { get; set; }
         public virtual DbSet<VwCourseStudentCount> VwCourseStudentCounts { get; set; }
         public virtual DbSet<VwDepartmentCourseCount> VwDepartmentCourseCounts { get; set; }
+        public virtual DbSet<DepartmentInsertResult> DepartmentInsertResults { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -143,6 +144,11 @@ namespace ContosoApi.Models
                 entity.HasNoKey();
 
                 entity.ToView("vwDepartmentCourseCount");
+            });
+
+            modelBuilder.Entity<DepartmentInsertResult>(entity =>
+            {
+                entity.HasNoKey();
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -69,23 +69,14 @@ namespace ContosoApi.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(department).State = EntityState.Modified;
+            if (!DepartmentExists(department.DepartmentId))
+            {
+                return NotFound();
+            }
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DepartmentExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.Database.ExecuteSqlInterpolatedAsync(
+                $"EXEC Department_Update {department.DepartmentId}, {department.Name}, {department.Budget}, {department.StartDate}, {department.InstructorId}, {department.RowVersion}"
+            );
 
             return NoContent();
         }
@@ -94,12 +85,13 @@ namespace ContosoApi.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Department>> PostDepartment(Department department)
+        public IActionResult PostDepartment(Department department)
         {
-            _context.Departments.Add(department);
-            await _context.SaveChangesAsync();
+            DepartmentInsertResult result = _context.DepartmentInsertResults.FromSqlInterpolated(
+                $"EXEC Department_Insert {department.Name}, {department.Budget}, {department.StartDate}, {department.InstructorId}"
+            ).ToList()[0];
 
-            return CreatedAtAction("GetDepartment", new { id = department.DepartmentId }, department);
+            return CreatedAtAction("GetDepartment", new { id = result.DepartmentId }, department);
         }
 
         // DELETE: api/Departments/5
@@ -112,8 +104,12 @@ namespace ContosoApi.Controllers
                 return NotFound();
             }
 
-            _context.Departments.Remove(department);
-            await _context.SaveChangesAsync();
+            //_context.Departments.Remove(department);
+            //await _context.SaveChangesAsync();
+
+            await _context.Database.ExecuteSqlInterpolatedAsync(
+                $"EXEC Department_Delete {department.DepartmentId}, {department.RowVersion}"
+            );
 
             return department;
         }
