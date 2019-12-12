@@ -163,12 +163,15 @@ namespace ContosoApi.Models
             {
                 Console.WriteLine("Entity Name: {0}", entry.Entity.GetType().FullName);
                 Console.WriteLine("Status: {0}", entry.State);
-                if (entry.State == EntityState.Modified)
+                switch (entry.State)
                 {
-                    entry.CurrentValues.SetValues(new
-                    {
-                        DateModified = DateTime.Now
-                    });
+                    case EntityState.Modified:
+                        entry.CurrentValues.SetValues(new { DateModified = DateTime.Now });
+                        break;
+                    case EntityState.Deleted:
+                        entry.CurrentValues.SetValues(new { IsDeleted = true });
+                        entry.State = EntityState.Unchanged;
+                        break;
                 }
             }
             return base.SaveChanges();
@@ -181,12 +184,15 @@ namespace ContosoApi.Models
             {
                 Console.WriteLine("Entity Name: {0}", entry.Entity.GetType().FullName);
                 Console.WriteLine("Status: {0}", entry.State);
-                if (entry.State == EntityState.Modified)
+                switch (entry.State)
                 {
-                    entry.CurrentValues.SetValues(new
-                    {
-                        DateModified = DateTime.Now
-                    });
+                    case EntityState.Modified:
+                        entry.CurrentValues.SetValues(new { DateModified = DateTime.Now });
+                        break;
+                    case EntityState.Deleted:
+                        entry.CurrentValues.SetValues(new { IsDeleted = true });
+                        entry.State = EntityState.Unchanged;
+                        break;
                 }
             }
             return base.SaveChangesAsync(cancellationToken);

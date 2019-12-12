@@ -24,14 +24,17 @@ namespace ContosoApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Person>>> GetPeople()
         {
-            return await _context.People.ToListAsync();
+            return await _context.People.Where(p => !p.IsDeleted).ToListAsync();
         }
 
         // GET: api/People/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPerson(int id)
         {
-            var person = await _context.People.Where(p => p.Id == id).Select(p => new
+            var person = await _context.People.Where(p =>
+                p.Id == id &&
+                !p.IsDeleted
+            ).Select(p => new
             {
                 p.Id,
                 p.FirstName,

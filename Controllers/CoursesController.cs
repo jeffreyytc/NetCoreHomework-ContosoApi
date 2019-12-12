@@ -24,7 +24,7 @@ namespace ContosoApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Course>>> GetCourses()
         {
-            return await _context.Courses.ToListAsync();
+            return await _context.Courses.Where(c => !c.IsDeleted).ToListAsync();
         }
 
         // GET: api/Courses/Students
@@ -45,7 +45,10 @@ namespace ContosoApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCourse(int id)
         {
-            var course = await _context.Courses.Where(c => c.CourseId == id).Select(c => new
+            var course = await _context.Courses.Where(c =>
+                c.CourseId == id &&
+                !c.IsDeleted
+            ).Select(c => new
             {
                 Id = c.CourseId,
                 c.Title,
