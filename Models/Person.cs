@@ -32,6 +32,7 @@ namespace ContosoApi.Models
         [Required]
         [StringLength(128)]
         public string Discriminator { get; set; }
+        public DateTime DateModified { get; set; }
 
         [InverseProperty("Instructor")]
         public virtual OfficeAssignment OfficeAssignment { get; set; }
